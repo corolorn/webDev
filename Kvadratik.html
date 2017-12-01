@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html 5 1</title>
+</head>
+<body>
+<canvas id = "canvas" width = "300" height = "300" style = "border: 1px solid;"></canvas>
+<script type="text/javascript">
+
+    var canvaas = document.getElementById('canvas');
+    var context = canvaas.getContext('2d')
+    var x = 10;
+        y = 10;
+    var gameEnginge;
+function drawRect(){
+context.fillStyle = 'black';
+context.clearRect(0,0,300,300)
+context.fillRect(x,y,50,50);
+    }
+var NextGameStep = (function () {
+    return requestAnimationFrame;
+
+})();
+
+    var gameEngingeStart = function (callback) {
+        gameEnginge = callback;
+        gameEngineStep();
+
+    };
+
+    var gameEngineStep = function () {
+        gameEnginge();
+        NextGameStep(gameEngineStep)
+
+    }
+    var setGameEngine = function (callback) {
+         gameEnginge = callback;
+     };
+    var gameLoopRight = function () {
+    drawRect();
+    x+=1;
+        if(x>=250){
+            setGameEngine(gameLoopLeft)
+        }
+    };
+
+    var gameLoopLeft = function () {
+        drawRect();
+        x-=1;
+        if(x<0){
+            setGameEngine(gameLoopRight)
+        }
+
+    }
+
+
+gameEngingeStart(gameLoopRight);
+
+</script>
+</body>
+</html>
